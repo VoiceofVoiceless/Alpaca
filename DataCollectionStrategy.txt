@@ -1,0 +1,53 @@
+# Data Collection Strategy
+
+## Public Group Sources
+- **Social Media**: Twitter API (historical tweets), Reddit Pushshift API, Facebook Public Page RSS
+- **News**: Google News RSS (filter by consumer-focused outlets)
+- **Forums**: Web scrapers for platforms like ConsumerAffairs, Trustpilot
+
+## Institutional Group Sources
+- **Government**: 
+  - FRED Economic Data API (Federal Reserve)
+  - BLS Open Data (employment stats)
+  - SEC EDGAR (10-K filings sentiment)
+- **Institutional Media**:
+  - Bloomberg Terminal API (institutional news)
+  - Reuters Institutional RSS feeds
+  - Industry white papers (arXiv, SSRN)
+
+# Processing Pipeline
+```python
+# Example API call structure using Python
+import requests
+
+def fetch_public_sentiment():
+    twitter_params = {
+        'query': '(consumer OR public) lang:en',
+        'max_results': 100,
+        'tweet.fields': 'created_at,public_metrics'
+    }
+    return requests.get(
+        'https://api.twitter.com/2/tweets/search/recent',
+        headers={'Authorization': f'Bearer {TWITTER_TOKEN}'},
+        params=twitter_params
+    ).json()
+
+def fetch_institutional_data():
+    fred_params = {
+        'series_id': 'UNRATE',  # Unemployment rate
+        'api_key': FRED_KEY,
+        'file_type': 'json'
+    }
+    return requests.get(
+        'https://api.stlouisfed.org/fred/series/observations',
+        params=fred_params
+    ).json()
+```
+
+# Analysis Matrix
+| Metric               | Public Group Method          | Institutional Group Method       |
+|----------------------|------------------------------|-----------------------------------|
+| Sentiment Scoring    | VADER + Custom Lexicon       | Loughran-McDonald Financial Dict |
+| Trend Analysis       | ARIMA + Prophet              | VAR Models                        |
+| Correlation          | Spearman's Rank              | Granger Causality                 |
+| Visualization        | Sentiment Heatmaps           | Economic Indicator Dashboards    |

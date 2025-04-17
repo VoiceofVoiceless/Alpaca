@@ -1,0 +1,1 @@
+#Crunch data gathered from public sources to determine confidence of institutional investors and governments.

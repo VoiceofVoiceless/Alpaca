@@ -1,0 +1,1 @@
+#available market information regarding the account of assets relative to a chosen trading strategy.

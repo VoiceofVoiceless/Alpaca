@@ -1,0 +1,1 @@
+#mathematical indicators to be functionally applied to market data to determine 
